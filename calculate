@@ -1,0 +1,26 @@
+import numpy as np
+
+def calculate_similarity(matrix):
+    # Calculate the cosine similarity between each pair of vectors in the matrix
+    similarity_matrix = np.zeros((len(matrix), len(matrix)))
+    for i in range(len(matrix)):
+        for j in range(len(matrix)):
+            similarity_matrix[i][j] = np.dot(matrix[i], matrix[j]) / (np.linalg.norm(matrix[i]) * np.linalg.norm(matrix[j]))
+
+    return similarity_matrix
+
+def find_similar_items(matrix, item_index, num_similar_items):
+    # Find the most similar items to the given item in the matrix
+    similarity_scores = matrix[item_index]
+    sorted_indices = np.argsort(similarity_scores)[::-1]  # Sort the indices in descending order of similarity
+    similar_items = sorted_indices[1:num_similar_items+1]  # Exclude the first item as it is the same item
+
+    return similar_items
+
+# Example usage
+matrix = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+similarity_matrix = calculate_similarity(matrix)
+similar_items = find_similar_items(similarity_matrix, item_index, num_similar_items)
+
+print("Most similar items to item", item_index, ":", similar_items
